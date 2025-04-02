@@ -1,4 +1,4 @@
-# Civitai Browser Docker
+# Civitai Model Downloader
 
 A standalone application for browsing and downloading models from Civitai.
 
@@ -124,28 +124,6 @@ This project is based on the [SD-Civitai-Browser-Plus](https://github.com/BlafKi
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Environment Variables Configuration
-
-This application supports configuration through environment variables that can be set during Docker runtime or added to a .env file:
-
-| Environment Variable      | Description               | Default Value                   |
-| ------------------------- | ------------------------- | ------------------------------- |
-| CIVITAI_API_KEY           | Civitai API Key           | ""                              |
-| CIVITAI_MODEL_DIR         | Model Storage Directory   | "./models"                      |
-| CIVITAI_CONFIG_PATH       | Config File Path          | "./config/settings.json"        |
-| CIVITAI_USE_ARIA2         | Use Aria2 for Downloads   | true                            |
-| CIVITAI_ARIA2_URL         | Aria2 RPC URL             | "http://localhost:6800/jsonrpc" |
-| CIVITAI_ARIA2_SECRET      | Aria2 RPC Secret          | ""                              |
-| CIVITAI_ARIA2_FLAGS       | Aria2 Additional Params   | ""                              |
-| CIVITAI_SHOW_NSFW         | Show Adult Content        | false                           |
-| CIVITAI_CREATE_MODEL_JSON | Create Model JSON Files   | true                            |
-| CIVITAI_USE_PROXY         | Use Proxy                 | false                           |
-| CIVITAI_PROXY_URL         | Proxy URL                 | ""                              |
-| CIVITAI_DISABLE_DNS       | Disable DNS Lookup        | false                           |
-| CIVITAI_SAVE_IMAGES       | Save Model Preview Images | false                           |
-| CIVITAI_IMAGE_DIR         | Image Save Directory      | null                            |
-| CIVITAI_TIMEOUT           | API Request Timeout (sec) | 30                              |
 
 ## File System Permissions
 
