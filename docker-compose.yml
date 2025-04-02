@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  civitai-browser:
+    build: .
+    ports:
+      - '8000:8000'
+    environment:
+      - CIVITAI_API_KEY=${CIVITAI_API_KEY:-}
+      - CIVITAI_SHOW_NSFW=${CIVITAI_SHOW_NSFW:-false}
+      - CIVITAI_USE_ARIA2=${CIVITAI_USE_ARIA2:-true}
+      - CIVITAI_ARIA2_URL=http://aria2:6800/jsonrpc
+    volumes:
+      - ./models:/data/models
+      - ./config:/data/config
+    depends_on:
+      - aria2
+    restart: unless-stopped
+
+  aria2:
+    image: p3terx/aria2-pro:latest
+    ports:
+      - '6800:6800'
+    volumes:
+      - ./models:/downloads
+      - ./aria2-config:/config
+    environment:
+      - RPC_SECRET=${ARIA2_SECRET:-}
+      - RPC_PORT=6800
+    restart: unless-stopped

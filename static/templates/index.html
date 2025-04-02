@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Civitai Browser</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Civitai Browser</h1>
+        <nav>
+          <ul>
+            <li><a href="#" class="active" data-page="browse">Browse</a></li>
+            <li><a href="#" data-page="downloads">Downloads</a></li>
+            <li><a href="#" data-page="settings">Settings</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <main>
+        <!-- Browse Tab -->
+        <section id="browse" class="page active">
+          <div class="search-container">
+            <div class="search-box">
+              <input
+                type="text"
+                id="search-input"
+                placeholder="Search models..."
+              />
+              <button id="search-button">Search</button>
+            </div>
+            <div class="filters">
+              <div class="filter-group">
+                <label for="model-type">Type:</label>
+                <select id="model-type" multiple>
+                  <option value="">All Types</option>
+                  <!-- Options will be populated by JS -->
+                </select>
+              </div>
+              <div class="filter-group">
+                <label for="base-model">Base Model:</label>
+                <select id="base-model" multiple>
+                  <option value="">All Base Models</option>
+                  <!-- Options will be populated by JS -->
+                </select>
+              </div>
+              <div class="filter-group">
+                <label for="sort-by">Sort By:</label>
+                <select id="sort-by">
+                  <option value="Most Downloaded">Most Downloaded</option>
+                  <option value="Highest Rated">Highest Rated</option>
+                  <option value="Most Liked">Most Liked</option>
+                  <option value="Most Discussed">Most Discussed</option>
+                  <option value="Most Collected">Most Collected</option>
+                  <option value="Most Images">Most Images</option>
+                  <option value="Newest">Newest</option>
+                  <option value="Oldest">Oldest</option>
+                </select>
+              </div>
+              <div class="filter-checkbox">
+                <input type="checkbox" id="show-nsfw" />
+                <label for="show-nsfw">Show NSFW Content</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="pagination">
+            <button id="prev-page" disabled>Previous</button>
+            <span id="page-info">Page 1 of 1</span>
+            <button id="next-page">Next</button>
+          </div>
+
+          <div id="results-container">
+            <div class="loading">Loading...</div>
+            <!-- Results will be populated by JS -->
+          </div>
+        </section>
+
+        <!-- Downloads Tab -->
+        <section id="downloads" class="page">
+          <h2>Download Queue</h2>
+          <div class="construction-notice">
+            <p>
+              ⚠️ The download feature is currently under construction. This
+              functionality is temporarily disabled.
+            </p>
+            <p>Please check back later for updates.</p>
+          </div>
+          <div class="download-actions-bar">
+            <button
+              id="clear-history-btn"
+              class="btn"
+              onclick="clearDownloadHistory()"
+            >
+              Clear History
+            </button>
+          </div>
+          <div id="queue-container">
+            <!-- Queue will be populated by JS -->
+            <div class="no-downloads">No downloads in queue</div>
+          </div>
+        </section>
+
+        <!-- Settings Tab -->
+        <section id="settings" class="page">
+          <h2>Settings</h2>
+          <form id="settings-form">
+            <div class="form-group">
+              <label for="api-key">CivitAI API Key:</label>
+              <input
+                type="text"
+                id="api-key"
+                placeholder="Enter your CivitAI API key"
+              />
+              <p class="help-text">
+                Optional. Required for some downloads.
+                <a href="https://civitai.com/user/account" target="_blank"
+                  >Get your API key</a
+                >
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label for="model-dir">Models Directory:</label>
+              <input type="text" id="model-dir" placeholder="/path/to/models" />
+            </div>
+
+            <div class="form-group checkbox">
+              <input type="checkbox" id="use-aria2" />
+              <label for="use-aria2">Download models using Aria2</label>
+              <p class="help-text">
+                Faster downloads but may not work with all models
+              </p>
+            </div>
+
+            <div class="form-group" id="aria2-flags-group">
+              <label for="aria2-flags">Aria2 Additional Flags:</label>
+              <input
+                type="text"
+                id="aria2-flags"
+                placeholder="--max-connection-per-server=5"
+              />
+              <p class="help-text">Optional. Advanced users only.</p>
+            </div>
+
+            <div class="form-group checkbox">
+              <input type="checkbox" id="create-json" />
+              <label for="create-json"
+                >Create JSON info file for downloaded models</label
+              >
+            </div>
+
+            <div class="form-group checkbox">
+              <input type="checkbox" id="save-images" />
+              <label for="save-images">Save preview images with models</label>
+            </div>
+
+            <div class="form-group" id="image-dir-group">
+              <label for="image-dir">Custom Images Directory:</label>
+              <input type="text" id="image-dir" placeholder="/path/to/images" />
+              <p class="help-text">
+                Optional. Leave empty to save in model directories.
+              </p>
+            </div>
+
+            <div class="form-group checkbox">
+              <input type="checkbox" id="use-proxy" />
+              <label for="use-proxy">Use Proxy</label>
+            </div>
+
+            <div class="form-group" id="proxy-url-group">
+              <label for="proxy-url">Proxy URL:</label>
+              <input
+                type="text"
+                id="proxy-url"
+                placeholder="http://username:password@proxy:port"
+              />
+            </div>
+
+            <div class="form-group checkbox">
+              <input type="checkbox" id="disable-dns" />
+              <label for="disable-dns"
+                >Disable DNS Lookup (helps with some network issues)</label
+              >
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" id="save-settings">Save Settings</button>
+            </div>
+          </form>
+        </section>
+      </main>
+
+      <!-- Model Details Modal -->
+      <div id="model-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <div id="model-details">
+            <!-- Will be populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Civitai Browser - Standalone Docker Application</p>
+    </footer>
+
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/api-test.js"></script>
+  </body>
+</html>

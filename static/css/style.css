@@ -1,0 +1,848 @@
+/* General Styles */
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2980b9;
+  --background-color: #f5f5f5;
+  --card-background: #ffffff;
+  --text-color: #333333;
+  --border-color: #dddddd;
+  --success-color: #2ecc71;
+  --danger-color: #e74c3c;
+  --warning-color: #f39c12;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  min-height: calc(100vh - 60px);
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+header h1 {
+  color: var(--primary-color);
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav li {
+  margin-left: 1rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-color);
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover,
+nav a.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Main Content */
+main {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* Search and Filters */
+.search-container {
+  margin-bottom: 1.5rem;
+}
+
+.search-box {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px 0 0 4px;
+  font-size: 1rem;
+}
+
+.search-box button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.search-box button:hover {
+  background-color: var(--secondary-color);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.filter-checkbox label {
+  margin-left: 0.5rem;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: var(--secondary-color);
+}
+
+.pagination button:disabled {
+  background-color: var(--border-color);
+  cursor: not-allowed;
+}
+
+.pagination span {
+  margin: 0 1rem;
+}
+
+/* Results Grid */
+#results-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.model-card {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.model-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.model-card.nsfw {
+  border-color: var(--danger-color);
+}
+
+.model-card .card-image {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.model-card .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.model-card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.model-card .nsfw-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--danger-color);
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.model-card .card-content {
+  padding: 1rem;
+}
+
+.model-card h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.model-card .card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.model-card .card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.model-card .card-actions button {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex: 1;
+  margin: 0 0.25rem;
+}
+
+.model-card .card-actions button:hover {
+  background-color: var(--secondary-color);
+}
+
+.model-card .card-actions button.view-btn {
+  background-color: #f1c40f;
+}
+
+.model-card .card-actions button.view-btn:hover {
+  background-color: #d4ac0d;
+}
+
+/* Download Queue */
+#queue-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.download-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease;
+}
+
+/* 为不同状态添加整体背景样式 */
+.download-item.status-downloading {
+  background-color: #f0f7ff;
+  border-color: #91caff;
+}
+
+.download-item.status-completed {
+  background-color: #f6ffed;
+  border-color: #b7eb8f;
+}
+
+.download-item.status-failed {
+  background-color: #fff2f0;
+  border-color: #ffccc7;
+}
+
+.download-item.status-active {
+  background-color: #e6f7ff;
+  border-color: #91d5ff;
+}
+
+.download-item .download-info {
+  flex: 1;
+}
+
+.download-item h3 {
+  margin-bottom: 0.25rem;
+}
+
+.download-item .download-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.download-item .download-progress {
+  width: 240px;
+}
+
+.progress-bar {
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--primary-color);
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 20px 20px;
+  animation: progress-bar-stripes 1s linear infinite;
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+.progress-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+  font-size: 0.9rem;
+}
+
+.progress-time {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 20px 0;
+  }
+}
+
+/* Only show the animation for active downloads */
+.download-item:not(.status-downloading) .progress-bar-fill {
+  animation: none;
+}
+
+.download-item.status-downloading .progress-bar-fill {
+  background-color: #1890ff;
+}
+
+.download-item.status-completed .progress-bar-fill {
+  background-color: #52c41a;
+}
+
+.download-item.status-failed .progress-bar-fill {
+  background-color: #ff4d4f;
+  width: 100% !important;
+}
+
+.download-item .download-status {
+  width: 100px;
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.download-item .status-queued {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.download-item .status-downloading {
+  background-color: var(--warning-color);
+  color: white;
+}
+
+.download-item .status-completed {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.download-item .status-failed {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+.download-item .status-active {
+  background-color: #1890ff;
+  color: white;
+}
+
+.download-item .download-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.download-item .download-actions button {
+  padding: 0.5rem 1rem;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.download-item .download-actions button:hover {
+  background-color: #ff7875;
+}
+
+.download-item .error-message {
+  margin-top: 0.5rem;
+  color: #ff4d4f;
+  font-size: 0.85rem;
+}
+
+.no-downloads {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+/* Settings Form */
+#settings-form {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input[type='text'],
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.form-group.checkbox label {
+  margin-left: 0.5rem;
+  margin-bottom: 0;
+}
+
+.help-text {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.form-actions {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.form-actions button {
+  padding: 0.75rem 2rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.form-actions button:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  overflow-y: auto;
+}
+
+.modal-content {
+  background-color: var(--card-background);
+  margin: 5% auto;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 1000px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: var(--text-color);
+}
+
+#model-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.model-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.model-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.gallery-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.gallery-image:hover {
+  transform: scale(1.05);
+}
+
+.model-description {
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.model-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.meta-item {
+  padding: 0.5rem 1rem;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.model-versions {
+  margin-bottom: 1.5rem;
+}
+
+.version-item {
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.version-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.version-files {
+  margin-top: 1rem;
+}
+
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.file-item button {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.file-item button:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--text-color);
+  color: white;
+  margin-top: 2rem;
+}
+
+/* aria2下载任务样式 */
+.aria2-download {
+  border-left: 4px solid #1890ff;
+}
+
+.aria2-badge {
+  background-color: #1890ff;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-left: 6px;
+}
+
+.test-badge {
+  background-color: #722ed1;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-left: 6px;
+}
+
+.download-speed,
+.download-eta {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #666;
+  display: flex;
+  justify-content: space-between;
+}
+
+.download-speed {
+  color: #1890ff;
+  font-weight: bold;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    margin-top: 1rem;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  .model-card .card-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .model-card .card-actions button {
+    margin: 0;
+  }
+
+  .download-item {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .download-item .download-progress {
+    width: 100%;
+  }
+
+  .download-item .download-status {
+    width: auto;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 1rem;
+  }
+}
+
+/* 最近下载样式 */
+.download-item .is-recent {
+  background-color: #e6f7ff;
+  border-left: 4px solid #52c41a;
+  position: relative;
+}
+
+.download-item .is-recent:before {
+  content: '最近';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #52c41a;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+}
+
+/* 下载操作栏 */
+.download-actions-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.download-actions-bar .btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+#clear-history-btn {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+#clear-history-btn:hover {
+  background-color: #e64a4d;
+}
+
+/* Construction notice */
+.construction-notice {
+  background-color: #fff3e0;
+  border: 2px dashed #f39c12;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.construction-notice p {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  color: #e67e22;
+}
+
+.construction-notice p:first-child {
+  font-weight: bold;
+  font-size: 1.2rem;
+}

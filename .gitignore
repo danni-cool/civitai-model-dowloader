@@ -1,3 +1,6 @@
 __pycache__
 .vscode
 running
+venv/
+config/
+.pytest_cache/
