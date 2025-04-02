@@ -4,3 +4,4 @@ running
 venv/
 config/
 .pytest_cache/
+node_modules/
