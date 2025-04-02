@@ -47,7 +47,41 @@ docker run -d \
   civitai-browser:latest
 ```
 
-4. Access the application in your browser at `http://localhost:8000`
+## File System Permissions
+
+When using Docker, you may encounter file system permission issues. Ensure:
+
+1. The mounted volume has the appropriate permissions
+2. Use the correct user to run the container
+3. Correctly configure the volume in docker-compose.yml
+
+If you encounter "Read-only file system" errors, you can try the following methods:
+
+```bash
+# Change local directory ownership
+sudo chown -R 1000:1000 ./models ./config
+
+# Or give all users write permissions
+chmod -R 777 ./models ./config
+```
+
+## Using Docker Compose
+
+We recommend using Docker Compose to run the application, as it will automatically set up the Aria2 container and correctly mount volumes:
+
+```bash
+# Clone repository
+git clone https://github.com/yourusername/sd-civitai-browser-plus.git
+cd sd-civitai-browser-plus
+
+# Create necessary directories
+mkdir -p models config aria2-config
+
+# Run container
+docker-compose up -d
+```
+
+Access http://localhost:8000 to use the application.
 
 ## Configuration
 
@@ -124,84 +158,3 @@ This project is based on the [SD-Civitai-Browser-Plus](https://github.com/BlafKi
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## File System Permissions
-
-When using Docker, you may encounter file system permission issues. Ensure:
-
-1. The mounted volume has the appropriate permissions
-2. Use the correct user to run the container
-3. Correctly configure the volume in docker-compose.yml
-
-If you encounter "Read-only file system" errors, you can try the following methods:
-
-```bash
-# Change local directory ownership
-sudo chown -R 1000:1000 ./models ./config
-
-# Or give all users write permissions
-chmod -R 777 ./models ./config
-```
-
-## Using Docker Compose
-
-We recommend using Docker Compose to run the application, as it will automatically set up the Aria2 container and correctly mount volumes:
-
-```bash
-# Clone repository
-git clone https://github.com/yourusername/sd-civitai-browser-plus.git
-cd sd-civitai-browser-plus
-
-# Create necessary directories
-mkdir -p models config aria2-config
-
-# Run container
-docker-compose up -d
-```
-
-Access http://localhost:8000 to use the application.
-
-# Civitai Browser Plus
-
-A simple browser application for browsing, searching, and downloading Civitai models.
-
-## Features
-
-- Browse and search Civitai models
-- Filter by type and base model
-- Download model files
-- Support aria2 acceleration download
-- Simple setup interface
-
-## Installation Requirements
-
-1. Python 3.10 or higher
-2. aria2 command line tool (strongly recommended for acceleration download)
-
-### Installing aria2
-
-**For macOS users**:
-
-```bash
-brew install aria2
-```
-
-## Setup
-
-1. Clone this repository
-2. Install dependencies: `pip install -r requirements.txt`
-3. Run the application: `python -m app.main`
-4. Open your browser and visit: `http://localhost:8000`
-
-## TODO
-
-Currently, the project is developing the following features:
-
-- 🚧 Download feature temporarily disabled, planned to be re-enabled in the next version
-- 📥 Optimizing the performance and reliability of the download manager
-- 🔑 Improving API key authentication and permission management
-- 🖼️ Enhancing preview image and model information display
-- 🌐 Adding multi-language support
-- 📱 Improving user experience on mobile devices
-
-If you have any suggestions or ideas, please feedback to us through Issues.
